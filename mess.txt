@@ -1,0 +1,29 @@
+taken from kaleidoscope.js :					    
+                                            var wrap1="<polygon points='";
+                                            var wrap2=X+","+Y+" "+(X+64)+","+Y+" ";
+                                            var wrap3=(X+64)+","+(Y+64)+" "+X+","+(Y+64)+"' ";
+                                            var wrap5=" />";
+                                            var url='url("data:image/svg+xml;base64,';
+                                            var urltail='")';     
+                                            var pix=url+attachment+urltail;
+                                            //var fill=" fill='"+pix+"' ";
+                                            var fill=" fill='url(fighter.svg)'";
+                                            var imgcood=" x='"+X+"' y='"+Y+"' ";
+                                            var img1="<image "+imgcood+"width='64' height='64' ";
+                                            //var img2="xlink:href="+pix+"/>";
+                                            var img2="xlink:href='fighter.svg' />";
+                                            var image=img1+img2;
+                                            var wrap=wrap1+wrap2+wrap3+fill+wrap5;
+                                            console.log("wrap "+wrap);
+                                            console.log("image "+image);
+                                            //Kaleidopattern.innerHTML=content+image;
+                                            Kaleidopattern.innerHTML=content+wrap;
+
+and yet from the same file: 
+				var div1="<svg style='";
+                 var div2="position:absolute;top:160px;left:80px;width:64px;height:64px;"+"'";
+                                            var div3=" >";
+                                            var divA=div1+div2+div3;
+                                            var divE="</svg>";
+                                            var div=divA+atob(attachment)+divE;
+                                            console.log(div);   

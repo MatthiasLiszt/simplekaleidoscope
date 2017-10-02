@@ -33,6 +33,7 @@
  height: 277px;
  border: 1px solid black;
  border-radius: 7px;
+ float: left;
 }
 
 #itall{
@@ -50,6 +51,19 @@
 
 #beg{
  display: none;
+}
+
+#shredcatalog{
+ width: 256px;
+ height: 256px; 
+ border: none;
+ float: left;
+}
+
+.space{
+ width: 64px;
+ height: 64px;
+ float: left;
 }
 
 body {

@@ -3,10 +3,18 @@
 <meta charset="utf-8">
 <title>simple kaleidoscope for background generation of webpages</title>
 <link rel="stylesheet" href="lunokhod.css"/>
+<script type="text/javascript" src="shredgenerator.js"></script>
 </head>
 <!-- body onclick="scaleBackground()" -->
 <body>
 <div id="menuline">
+<button id="reset">New</button>
+<button id="generate">generate</button>
+<button id="shreds">shreds</button>
+<button id="color">color</button>
+<button id="background">background</button>
+<button id="show">show</button>
+<button id="help">HELP</button>
 </div>
 <br></br>
 <div id="colormenu" >
@@ -14,9 +22,9 @@
 <div id="helptext">
 </div>
 <br></br>
-<!-- div id="itall" onmousedown="drawDot(event)" -->
-<svg id="kaleidopattern" >
-</svg>
+<svg id="kaleidopattern" ></svg>
+<div class="space"></div>
+<div id="shredcatalog"></div>
 <script type="text/javascript" src="kaleidoscope.js"></script>
 </body>
 </html>
