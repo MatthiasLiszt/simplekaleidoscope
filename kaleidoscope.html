@@ -18,13 +18,19 @@
 </div>
 <br></br>
 <div id="colormenu" >
+<button class="floatbutton" onclick="increaseRed()">red</button>
+<button class="floatbutton" onclick="increaseGreen()">green</button>
+<button class="floatbutton" onclick="increaseBlue()">blue</button>
+<button id="colorfield" onclick="colorSelected()">&nbsp;&nbsp;</button>
 </div>
-<div id="helptext">
-</div>
+<div id="helptext"></div>
 <br></br>
 <svg id="kaleidopattern" ></svg>
-<div class="space"></div>
 <div id="shredcatalog"></div>
+<br></br>
+&nbsp;
+<div id="codedump"></div>
+<div id="virtualdom"><svg id="virtualpattern" ></svg></div>
 <script type="text/javascript" src="kaleidoscope.js"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 #colormenu{
  display: none;
+ float: left;
 }
 
 #colorfield{
@@ -33,7 +34,6 @@
  height: 277px;
  border: 1px solid black;
  border-radius: 7px;
- float: left;
 }
 
 #itall{
@@ -57,13 +57,25 @@
  width: 256px;
  height: 256px; 
  border: none;
- float: left;
+ padding-right: 20%;
+ float: right;
 }
 
 .space{
- width: 64px;
- height: 64px;
- float: left;
+ width: 10%;
+ height: 10%;
+ float: right;
+}
+
+#codedump{
+ width: 80%;
+ height: 80%;
+ border: none;
+ float: none;
+}
+
+#virtualdom{
+ display: none;
 }
 
 body {

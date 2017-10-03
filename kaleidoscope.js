@@ -4,6 +4,14 @@ var Kaleidopattern=document.getElementById("kaleidopattern");
 var Katalog=document.getElementById("shredcatalog");
 var ShredsButton=document.getElementById("shreds");
 var NewButton=document.getElementById("reset");
+var ColorButton=document.getElementById("color");
+var Colormenu=document.getElementById("colormenu");
+var BackgroundButton=document.getElementById("background");
+var GenerateButton=document.getElementById("generate");
+var Codedump=document.getElementById("codedump");
+var Virtualdom=document.getElementById("virtualdom");
+var Virtualpattern=document.getElementById("virtualpattern");
+var ShowButton=document.getElementById("show");
 
 var Color=0;
 var curShred=[],curShredIndex=0;
@@ -11,6 +19,7 @@ var Key=0;
 var curKey=0;
 
 document.body.style.background="#eaeaea";
+document.body.style.backgroundColor="#eaeaea";
 initSVG();
 
 
@@ -49,6 +58,7 @@ function generateCatalog(){
  for(var i=0;i<(4*4);++i)
   {Shreds.push(generateShreds());}
 
+ Katalog.style.display="inline";
  Katalog.innerHTML=Shreds.join('');
 }
 
@@ -71,12 +81,14 @@ function registerPattern(x,key){
 }
 
 function initSVG(){
- var i3angle1="<polygon points='0,277 160,0 320,277 0,277 ' id='triangle' ";
- //var i3angle2=" onclick='"+"alert('mouse clicked')"+"' ";
+ var i3angle1="<polygon points='0,277 160,0 320,277 ' id='triangle' ";
  var i3angle3="style='fill:none;stroke:black;'/>";
  var i3angle=i3angle1+i3angle3;
+ var m3angle1="<polygon points='0,277 160,554 320,277 ' id='mtriangle' ";
+ var m3angle=m3angle1+i3angle3;
 
  Kaleidopattern.innerHTML=i3angle; 
+ //Virtualpattern.innerHTML=i3angle+m3angle;
  NewButton.addEventListener('click',function(){initSVG();});
  Kaleidopattern.addEventListener('click',function(event){
                                           var X=event.offsetX;
@@ -100,17 +112,124 @@ function initSVG(){
                                             else{rX=160-X;}
 
                                             var reflect1="<rect x='"+rX+"' y='"+rY+"'";
-                                            var reflect=reflect1+rect2+rect3+rect4; 
+                                            var reflect=reflect1+rect2+rect3+rect4;
+                                            var mX=320-rX,mY=rY; 
+                                            var mreflect1="<rect x='"+mX+"' y='"+mY+"'";
+                                            var mreflect=mreflect1+rect2+rect3+rect4;
                                            
                                             //alert("reflection "+rX+" "+rY);
                                             console.log("pshred "+pshred);
-                                            Kaleidopattern.innerHTML=content+pshred+reflect;
+                                            var alltogether=content+pshred+reflect+mreflect;
+                                            Kaleidopattern.innerHTML=alltogether;
+                                            var oldcontent=Virtualpattern.innerHTML;
+                                            var upper=oldcontent+pshred+reflect+mreflect;     
+                                            var mrect1="<rect x='"+X+"' y='"+(554-Y)+"'";
+                                            var mrect=mrect1+rect2+rect3+rect4;
+                                            var mmreflec1="<rect x='"+mX+"' y='"+(554-mY)+"'";
+                                            var mmreflec=mmreflec1+rect2+rect3+rect4;
+                                            var mreflec1="<rect x='"+rX+"' y='"+(554-rY)+"'";
+                                            var mreflec=mreflec1+rect2+rect3+rect4;
+                                            var mirrored=mreflec+mmreflec+mrect;
+                                            Virtualpattern.innerHTML=upper+mirrored; 
                                            }
                                           else
                                            {alert('not in triangle ! '+X+' '+Y);}  
                                          });
- console.log(i3angle);
+ //console.log(i3angle);
  ShredsButton.addEventListener('click',function(){generateCatalog();});
+ ColorButton.addEventListener('click',function(){choseColor();});
+ BackgroundButton.addEventListener('click',function(){changeBackground();});
+ GenerateButton.addEventListener('click',function(){generateCode();});
+ ShowButton.addEventListener('click',function(){showFullPattern();});
+ document.body.style.background="#eaeaea";
+ document.body.style.backgroundColor="#eaeaea";
+ Codedump.style.display="none";
+ Katalog.style.display="none";
+}
+
+function increaseRed(){
+ var red=Math.round(Color/(256*256));
+ red+=16;
+ if(red>255){red=8*16;}
+ if(red<(8*16)){red=255;}
+ Color=red*256*256+(Color%(256*256));
+ var c="#"+Color.toString(16);
+ console.log("color value "+c);
+ colorfield.style.backgroundColor=c;
+}
+
+function increaseGreen(){
+ var red=Math.round(Color/(256*256));
+ var green=Math.round((Color & 255*256)/256);
+ green+=16;
+ if(red<(8*16)){red=8*16;}
+ if(red>255){red=8*16;}
+ if(green>255){green=8*16;}
+ if(green<(8*16)){green=255;}
+ Color=(red*256*256)+(green*256)+(Color%256);
+ var c="#"+Color.toString(16);
+ console.log("red "+red+" green "+green);
+ console.log("color value "+c);
+ colorfield.style.backgroundColor=c;
+}
+
+function increaseBlue(){
+ var red=Math.round(Color/(256*256));
+ var green=Math.round((Color & 255*256)/256);
+ var blue=Color%256;
+ blue+=15;
+ if(red<(8*16)){red=8*16;}
+ if(red>255){red=8*16;}
+ if(green>255){green=8*16;}
+ if(green<(8*16)){green=255;}
+ if(blue>240){blue=8*16;}
+ if(blue<(8*16)){blue=240;}
+ Color=red*256*256+green*256+blue;
+ var c="#"+Color.toString(16);
+ console.log("color value "+c);
+ colorfield.style.backgroundColor=c;
+}
+
+function colorSelected(){
+ Colormenu.style.display = "none";
+}
+
+function choseColor(){
+ Colormenu.style.display= "inline";
+}
+
+function changeBackground(){
+ var c=Math.round(Math.random()*5); 
+ console.log("changeBackground running");
+ switch(c)
+  {case 0: var Background="lightgreen";
+           break;
+   case 1: var Background="lightblue";
+           break;
+   case 2: var Background="lightpink";
+           break;
+   case 3: var Background="yellow";
+           break;
+   case 4: var Background="wheat";
+           break;
+  }
+ document.body.style.backgroundColor=Background;
+}
+
+function generateCode(){
+ svghead='<svg xmlns="http://www.w3.org/2000/svg" width="320px" height="554px" viewBox="0 0 320 554">';
+ Codedump.style.display="inline";
+ Codedump.textContent=svghead+Virtualpattern.innerHTML+"</svg>";
 }
 
 
+function showFullPattern(){
+ svghead='<svg xmlns="http://www.w3.org/2000/svg" width="320px" height="554px" viewBox="0 0 320 554">';
+ var p=svghead+Virtualpattern.innerHTML+"</svg>";
+ var b=btoa(p);
+ var url='url(data:image/svg+xml;base64,';
+ var urltail=') repeat';
+ console.log(url+b+urltail);
+ document.body.style.background=url+b+urltail;
+ document.body.style.backgroundSize="128px 221.6px";
+}
