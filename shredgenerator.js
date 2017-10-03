@@ -36,23 +36,27 @@ function shredSVG(p,c="black"){
 }
 
 function patternSVG(p,key,c="black"){ // the same as shredSVG but creates a "pattern"
- var head1="<defs><pattern id='k"+key+"'"+"x='0' y='0' width='64' height='64' ";
- var head2="patternUnits='userSpaceOnUse' >";
+ var head1="<defs><pattern id='k"+key+"'"+"x='0' y='0' width='32' height='32' ";
+ var head2=" >";//patternUnits='userSpaceOnUse'
  var fhead1="<svg width='64' height='64' onclick='registerPattern(";
  var fhead2=" )"+"'"+">"; 
  var tail=" '></pattern></defs>";
  var ftail="'/></svg>"
  var body="<path fill='"+c+"' d='";
- var cood=[];
+ var cood=[],pcood=[];
 
  console.log("patternSVG running");
  console.log("p length "+p.length);
  cood.push(" M "+p.a.x+" "+p.a.y);
+ pcood.push(" M "+(p.a.x/2)+" "+(p.a.y/2));
  cood.push(" L "+p.b.x+" "+p.b.y);
+ pcood.push(" L "+(p.b.x/2)+" "+(p.b.y/2));
  cood.push(" L "+p.c.x+" "+p.c.y);
+ pcood.push(" L "+(p.c.x/2)+" "+(p.c.y/2));
  console.log(JSON.stringify(cood));
+ console.log(JSON.stringify(pcood));
 
- var rrr=head1+head2+body+cood[0]+cood[1]+cood[2]+tail;
+ var rrr=head1+head2+body+pcood[0]+pcood[1]+pcood[2]+tail;
  var brr=btoa(rrr);
  var brrr='"'+brr+'"';
  var frr=fhead1+brrr+","+key+fhead2+body+cood[0]+cood[1]+cood[2]+ftail;

@@ -19,7 +19,7 @@ function mouseAlert(){
 }
 
 function withinTriangle(x,y,w=160,h=277){
- var picSize=64;//picture size to 64px 
+ var picSize=32;//picture size to 32px 
  var deltaRight=w+((w/h)*y);
  var deltaLeft=w-((w/h)*y);
 
@@ -89,14 +89,22 @@ function initSVG(){
                                             var content=Kaleidopattern.innerHTML;
                                             var attachment=curShred[curShredIndex-1];
                                             var rect1="<rect x='"+X+"' y='"+Y+"'";
-                                            var rect2=" width='64' height='64' ";
+                                            var rect2=" width='32' height='32' ";
                                             var rect3=" style='stroke:none;fill:url(#k";
                                             var rect4=curKey+")' />";
                                             var rect=rect1+rect2+rect3+rect4;
                                             var pshred=atob(attachment)+rect; 
-                                            
+                                             
+                                            var rX,rY=277-Y-32,a;
+                                            if(X>160){a=X-160-32;rX=320-a-32;}
+                                            else{rX=160-X;}
+
+                                            var reflect1="<rect x='"+rX+"' y='"+rY+"'";
+                                            var reflect=reflect1+rect2+rect3+rect4; 
+                                           
+                                            //alert("reflection "+rX+" "+rY);
                                             console.log("pshred "+pshred);
-                                            Kaleidopattern.innerHTML=content+pshred;
+                                            Kaleidopattern.innerHTML=content+pshred+reflect;
                                            }
                                           else
                                            {alert('not in triangle ! '+X+' '+Y);}  
