@@ -29,8 +29,10 @@ function mouseAlert(){
 
 function withinTriangle(x,y,w=160,h=277){
  var picSize=32;//picture size to 32px 
- var deltaRight=w+((w/h)*y);
- var deltaLeft=w-((w/h)*y);
+ //var deltaRight=w+((w/h)*y);
+ //var deltaLeft=w-((w/h)*y);
+ var deltaRight=((w/h)*(h-y)+w);
+ var deltaLeft=w-((w/h)*(h-y));
 
  console.log("x = "+x+" y = "+y);
  console.log("deltaLeft "+deltaLeft+" deltaRight "+deltaRight);
@@ -82,8 +84,9 @@ function registerPattern(x,key){
 
 function initSVG(){
  var i3angle1="<polygon points='0,277 160,0 320,277 ' id='triangle' ";
+ var i3angle1b="<polygon points='0,0 160,277 320,0 ' id='triangle' ";
  var i3angle3="style='fill:none;stroke:black;'/>";
- var i3angle=i3angle1+i3angle3;
+ var i3angle=i3angle1b+i3angle3;
  var m3angle1="<polygon points='0,277 160,554 320,277 ' id='mtriangle' ";
  var m3angle=m3angle1+i3angle3;
 
