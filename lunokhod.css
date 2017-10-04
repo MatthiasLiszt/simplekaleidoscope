@@ -34,6 +34,15 @@
  height: 277px;
  border: 1px solid black;
  border-radius: 7px;
+ display: none;
+}
+
+#drawframe{
+ width: 320px;
+ height: 277px;
+ border: 1px solid black;
+ border-radius: 7px;
+ display: none;
 }
 
 #itall{

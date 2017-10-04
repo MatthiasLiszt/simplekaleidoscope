@@ -12,13 +12,11 @@ var Codedump=document.getElementById("codedump");
 var Virtualdom=document.getElementById("virtualdom");
 var Virtualpattern=document.getElementById("virtualpattern");
 var ShowButton=document.getElementById("show");
-var Drawframe=document.getElementById("drawframe");
 
 var Color=0;
 var curShred=[],curShredIndex=0;
 var Key=0;
 var curKey=0;
-var Clicks=0;
 
 document.body.style.background="#eaeaea";
 document.body.style.backgroundColor="#eaeaea";
@@ -32,7 +30,7 @@ function mouseAlert(){
 function withinTriangle(x,y,w=160,h=277){
  var picSize=32;//picture size to 32px 
  //var deltaRight=w+((w/h)*y);
- //var deltaLeft=w-((w/h)*y);;
+ //var deltaLeft=w-((w/h)*y);
  var deltaRight=((w/h)*(h-y)+w);
  var deltaLeft=w-((w/h)*(h-y));
 
@@ -84,121 +82,63 @@ function registerPattern(x,key){
  console.log("decode "+atob(curShred[curShredIndex-1]));
 }
 
-
-function innerReflections(mouse,w=320,h=277){
- var hw=w/2;
- var error=1.2;// preliminary correction value
- var f=(88/hw)*mouse.x;// ~ middle line of green kite
- var dd=mouse.y-f; // nearly perfect value for reflection in lower kite
- var innerCoordinates={x: mouse.x, y: mouse.y,
-                       rx: w-mouse.x, ry: mouse.y,
-                       dx: hw-dd,dy: h-mouse.x*error }; 
- return innerCoordinates;
-}
-
-function outerReflections(cood,w=320,h=277){
- var hw=w/2;
- var error=1.2;// preliminary correction value
- var outerCoordinates={lhx: cood.dx-160 , lhy: cood.x*error, 
-                       rhx: cood.dx+160 , rhy: cood.x*error,
-                       lx: hw-cood.x, ly: h-cood.y,
-                       rx: hw+cood.x, ry: h-cood.y};
- return outerCoordinates;
-}
-
-function greenAreaClicked(mouse,h=277){
- //alert("mouse "+mouse.x+" "+mouse.y);
- var c,o;
- c=innerReflections(mouse); 
- o=outerReflections(c);
-
- /*var circle1="<circle cx='"+c.x+"' cy='"+c.y+"' r='3' />";
- var circle2="<circle cx='"+c.rx+"' cy='"+c.ry+"' r='3' />";
- var circle3="<circle cx='"+c.dx+"' cy='"+c.dy+"' r='3' />";
- var circle4="<circle cx='"+o.lhx+"' cy='"+o.lhy+"' r='3' />";
- var circle5="<circle cx='"+o.rhx+"' cy='"+o.rhy+"' r='3' />";
- var circle6="<circle cx='"+o.lx+"' cy='"+o.ly+"' r='3' />";
- var circle7="<circle cx='"+o.rx+"' cy='"+o.ry+"' r='3' />";
- var circles=circle1+circle2+circle3+circle4+circle5+circle6+circle7;*/
-
- 
- var shred1=getPatternCode(c.x,c.y);
- var shred2=getPatternCode(c.rx,c.ry);
- var shred3=getPatternCode(c.dx,c.dy);
-
- var shred4=getPatternCode(o.lhx,o.lhy);
- var shred5=getPatternCode(o.rhx,o.rhy);
- var shred6=getPatternCode(o.lx,o.ly);
- var shred7=getPatternCode(o.rx,o.ry);
-
- var ishreds=shred1+shred2+shred3;
- var oshreds=shred4+shred5+shred6+shred7;
- var shreds=ishreds+oshreds;
-
- Kaleidopattern.innerHTML+=shreds;
- Virtualpattern.innerHTML+=shreds;
-
- var m1=getPatternCode(c.x,2*h-c.y);
- var m2=getPatternCode(c.rx,2*h-c.ry);
- var m3=getPatternCode(c.dx,2*h-c.dy);
-
- var m4=getPatternCode(o.lhx,2*h-o.lhy);
- var m5=getPatternCode(o.rhx,2*h-o.rhy);
- var m6=getPatternCode(o.lx,2*h-o.ly);
- var m7=getPatternCode(o.rx,2*h-o.ry);
-
- Virtualpattern.innerHTML+=m1+m2+m3+m4+m5+m6+m7;
-  
- Drawframe.style.display="none";
- Kaleidopattern.style.display="inline";
-}
-
-function getPatternCode(X,Y){
- var attachment=curShred[curShredIndex-1];
- var rect1="<rect x='"+X+"' y='"+Y+"'";
- var rect2=" width='32' height='32' ";
- var rect3=" style='stroke:none;fill:url(#k";
- var rect4=curKey+")' />";
- var rect=rect1+rect2+rect3+rect4;
- var pshred=atob(attachment)+rect; 
-
- return pshred;
-}
-
 function initSVG(){
+ var i3angle1="<polygon points='0,277 160,0 320,277 ' id='triangle' ";
  var i3angle1b="<polygon points='0,0 160,277 320,0 ' id='triangle' ";
  var i3angle3="style='fill:none;stroke:black;'/>";
  var i3angle=i3angle1b+i3angle3;
- var greenArea1="<polygon points='0,0 160,0 160,88 80,138.5' id='greenarea' ";
- var greenArea2="style='fill:lightgreen;stroke:green;' />";
- var greenArea=greenArea1+greenArea2;
- var line="<polyline points='160,88 240,138.5' style='stroke:black' />"; 
- var rline="<polyline points='240,138.5 320,189' style='stroke:black' />"; 
- var lline="<polyline points='80,138.5 0,189' style='stroke:black' />"; 
- var lines=line+rline+lline;
+ var m3angle1="<polygon points='0,277 160,554 320,277 ' id='mtriangle' ";
+ var m3angle=m3angle1+i3angle3;
 
- Drawframe.innerHTML=i3angle+greenArea+lines; 
-
- var GreenArea=document.getElementById('greenarea');
-
- GreenArea.addEventListener('click',function(event)
-                                     {var x={x: event.offsetX,y: event.offsetY};
-                                      greenAreaClicked(x);});
- Kaleidopattern.addEventListener('click',function(event)
-                                          {Kaleidopattern.style.display="none";
-                                           Drawframe.style.display="inline";});
-
- GreenArea.addEventListener('mouseleave',function(){
-                                               console.log("mouseleft");
-                                               if(Kaleidopattern.innerHTML)
-                                                {Kaleidopattern.style.display="inline";
-                                                 Drawframe.style.display="none";}
-                           });
-
+ Kaleidopattern.innerHTML=i3angle; 
+ //Virtualpattern.innerHTML=i3angle+m3angle;
  NewButton.addEventListener('click',function(){initSVG();});
- 
+ Kaleidopattern.addEventListener('click',function(event){
+                                          var X=event.offsetX;
+                                          var Y=event.offsetY;
+                                          console.log("layer "+event.layerX+" "+event.layerY);
+                                          console.log("page "+event.pageX+" "+event.pageY);
+                                          console.log("offset "+event.offsetX+" "+event.offsetY); 
+                                          if(withinTriangle(X,Y))
+                                           {//alert('mouse clicked at '+X+' '+Y);
+                                            var content=Kaleidopattern.innerHTML;
+                                            var attachment=curShred[curShredIndex-1];
+                                            var rect1="<rect x='"+X+"' y='"+Y+"'";
+                                            var rect2=" width='32' height='32' ";
+                                            var rect3=" style='stroke:none;fill:url(#k";
+                                            var rect4=curKey+")' />";
+                                            var rect=rect1+rect2+rect3+rect4;
+                                            var pshred=atob(attachment)+rect; 
+                                             
+                                            var rX,rY=277-Y-32,a;
+                                            if(X>160){a=X-160-32;rX=320-a-32;}
+                                            else{rX=160-X;}
 
-
+                                            var reflect1="<rect x='"+rX+"' y='"+rY+"'";
+                                            var reflect=reflect1+rect2+rect3+rect4;
+                                            var mX=320-rX,mY=rY; 
+                                            var mreflect1="<rect x='"+mX+"' y='"+mY+"'";
+                                            var mreflect=mreflect1+rect2+rect3+rect4;
+                                           
+                                            //alert("reflection "+rX+" "+rY);
+                                            console.log("pshred "+pshred);
+                                            var alltogether=content+pshred+reflect+mreflect;
+                                            Kaleidopattern.innerHTML=alltogether;
+                                            var oldcontent=Virtualpattern.innerHTML;
+                                            var upper=oldcontent+pshred+reflect+mreflect;     
+                                            var mrect1="<rect x='"+X+"' y='"+(554-Y)+"'";
+                                            var mrect=mrect1+rect2+rect3+rect4;
+                                            var mmreflec1="<rect x='"+mX+"' y='"+(554-mY)+"'";
+                                            var mmreflec=mmreflec1+rect2+rect3+rect4;
+                                            var mreflec1="<rect x='"+rX+"' y='"+(554-rY)+"'";
+                                            var mreflec=mreflec1+rect2+rect3+rect4;
+                                            var mirrored=mreflec+mmreflec+mrect;
+                                            Virtualpattern.innerHTML=upper+mirrored; 
+                                           }
+                                          else
+                                           {alert('not in triangle ! '+X+' '+Y);}  
+                                         });
+ //console.log(i3angle);
  ShredsButton.addEventListener('click',function(){generateCatalog();});
  ColorButton.addEventListener('click',function(){choseColor();});
  BackgroundButton.addEventListener('click',function(){changeBackground();});
@@ -208,8 +148,6 @@ function initSVG(){
  document.body.style.backgroundColor="#eaeaea";
  Codedump.style.display="none";
  Katalog.style.display="none";
- Drawframe.style.display="inline";
- Kaleidopattern.style.display="none";
 }
 
 function increaseRed(){
