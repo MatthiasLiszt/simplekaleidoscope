@@ -18,7 +18,7 @@ var Color=0;
 var curShred=[],curShredIndex=0;
 var Key=0;
 var curKey=0;
-var Clicks=0;
+var ShredSelected=false;
 
 document.body.style.background="#eaeaea";
 document.body.style.backgroundColor="#eaeaea";
@@ -62,6 +62,7 @@ function generateCatalog(){
  for(var i=0;i<(4*4);++i)
   {Shreds.push(generateShreds());}
 
+ ShredSelected=true;
  Katalog.style.display="inline";
  Katalog.innerHTML=Shreds.join('');
 }
@@ -162,7 +163,10 @@ function getPatternCode(X,Y){
  var rect=rect1+rect2+rect3+rect4;
  var pshred=atob(attachment)+rect; 
 
- return pshred;
+ if(ShredSelected)
+  {return pshred;}
+ else
+  {return '';}
 }
 
 function initSVG(){
@@ -178,7 +182,10 @@ function initSVG(){
  var lines=line+rline+lline;
 
  Drawframe.innerHTML=i3angle+greenArea+lines; 
-
+ Kaleidopattern.innerHTML='';
+ Virtualpattern.innerHTML='';
+ ShredSelected=false;
+ 
  var GreenArea=document.getElementById('greenarea');
 
  GreenArea.addEventListener('click',function(event)
