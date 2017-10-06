@@ -150,8 +150,6 @@ function greenAreaClicked(mouse,h=277){
 
  Virtualpattern.innerHTML+=m1+m2+m3+m4+m5+m6+m7;
   
- Drawframe.style.display="none";
- Kaleidopattern.style.display="inline";
 }
 
 function getPatternCode(X,Y){
@@ -191,16 +189,7 @@ function initSVG(){
  GreenArea.addEventListener('click',function(event)
                                      {var x={x: event.offsetX,y: event.offsetY};
                                       greenAreaClicked(x);});
- Kaleidopattern.addEventListener('click',function(event)
-                                          {Kaleidopattern.style.display="none";
-                                           Drawframe.style.display="inline";});
-
- GreenArea.addEventListener('mouseleave',function(){
-                                               console.log("mouseleft");
-                                               if(Kaleidopattern.innerHTML)
-                                                {Kaleidopattern.style.display="inline";
-                                                 Drawframe.style.display="none";}
-                           });
+ 
 
  NewButton.addEventListener('click',function(){initSVG();});
  
@@ -215,8 +204,6 @@ function initSVG(){
  document.body.style.backgroundColor="#eaeaea";
  Codedump.style.display="none";
  Katalog.style.display="none";
- Drawframe.style.display="inline";
- Kaleidopattern.style.display="none";
 }
 
 function increaseRed(){

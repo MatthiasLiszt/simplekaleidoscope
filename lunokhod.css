@@ -30,19 +30,22 @@
 }
 
 #kaleidopattern{
+ position: absolute;
+ top: 150px;
  width: 320px;
  height: 277px;
  border: 1px solid black;
  border-radius: 7px;
- display: none;
 }
 
 #drawframe{
+ position: absolute;
+ top: 150px;
  width: 320px;
  height: 277px;
  border: 1px solid black;
  border-radius: 7px;
- display: none;
+ opacity: 0.3;
 }
 
 #itall{
